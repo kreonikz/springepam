@@ -1,12 +1,19 @@
 package com.epam.learnspring.controller;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
+import com.epam.learnspring.model.Dog;
+import com.epam.learnspring.service.DogServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 public class DogController {
-    @GetMapping("/dog")
-    public String getDog(){
+    @Autowired
+    DogServiceImpl dogServiceImpl;
 
-        return ;
+    @GetMapping("/dog")
+    public String getDog(Model model) {
+        Dog dog = dogServiceImpl.getDog();
+        model.addAttribute("name", dog.getName());
+        return "dog";
     }
 }
