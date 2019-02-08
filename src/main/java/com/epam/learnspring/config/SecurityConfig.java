@@ -3,8 +3,8 @@
 //import org.springframework.context.annotation.Configuration;
 //
 //@Configuration
-//@EnableWebSecutrity
-//public class SecurityConfig {
+//@EnableWebSecurity
+//public class SecurityConfig (Auth) {
 //
 //
 //}
