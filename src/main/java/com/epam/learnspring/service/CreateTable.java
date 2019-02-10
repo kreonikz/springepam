@@ -23,7 +23,6 @@ public class CreateTable {
                             ")");
             return "table created";
         } catch (Exception e){
-            e.printStackTrace();
             return "table creation failed";
         }
     }
