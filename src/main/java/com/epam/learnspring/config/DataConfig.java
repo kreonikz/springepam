@@ -1,5 +1,7 @@
 package com.epam.learnspring.config;
 
+import com.epam.learnspring.service.CreateTable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -7,34 +9,40 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.sql.DataSource;
-
 @Configuration
 @PropertySource(value = "util.properties")
 public class DataConfig {
+    private Environment environment;
+
     public Environment getEnvironment() {
         return environment;
     }
 
+    @Autowired
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
 
-    private Environment environment;
 
-    //    @Bean
+    @Bean
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.postgresql.driver"));
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/example");
-        dataSource.setUsername("jdbc:postgresql.username");
-        dataSource.setUsername("jdbc:postgresql.password");
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.postgresql.url"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.postgresql.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.postgresql.password"));
         return dataSource;
     }
 
+    @Bean
     public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource());
+        return jdbcTemplate;
     }
 
-
+    @Bean
+    public CreateTable createTable() {
+        return new CreateTable(jdbcTemplate());
+    }
 }
