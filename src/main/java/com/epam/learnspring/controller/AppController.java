@@ -20,6 +20,7 @@ public class AppController {
     @Autowired
     private CatService catService;
 
+    // initialization beans from ioc.xml
     private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ioc.xml");
     private Cat barsik = applicationContext.getBean("cat", Cat.class);
 
