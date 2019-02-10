@@ -1,5 +1,6 @@
-package com.epam.learnspring.service;
+package com.epam.learnspring.service.impl;
 
+import com.epam.learnspring.service.DogService;
 import org.springframework.stereotype.Service;
 
 @Service

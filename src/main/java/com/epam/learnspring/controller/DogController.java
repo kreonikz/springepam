@@ -21,8 +21,8 @@ public class DogController {
 
     @GetMapping
     public String getDog(Model model) {
-        model.addAttribute("nameFromXml", dog1.getName());
         model.addAttribute("name", dogService.getName());
+        model.addAttribute("nameFromXml", dog1.getName());
 
         return "dog";
     }

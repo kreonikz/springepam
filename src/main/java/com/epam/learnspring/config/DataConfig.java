@@ -22,7 +22,7 @@ public class DataConfig {
 
     private Environment environment;
 
-    @Bean
+//    @Bean
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.postgresql.driver"));
