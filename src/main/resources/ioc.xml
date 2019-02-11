@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="dog" class="com.epam.learnspring.model.Dog" scope="singleton">
-        <constructor-arg value="Dimok"/>
+        <constructor-arg value="dogName"/>
+        <constructor-arg value="dogBark"/>
     </bean>
 </beans>
