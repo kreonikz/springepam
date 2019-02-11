@@ -18,24 +18,23 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 //@EnableGlobalMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.userDetailsService()
-//    }
-
+    @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/cat", "/dog").permitAll()
                 .antMatchers("/table/**").access("hasRole('ADMIN')")
+                .antMatchers("/admin").access("hasRole('ADMIN')")
+                .antMatchers("/user").access("hasRole('USER')")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
+                .formLogin().permitAll().defaultSuccessUrl("/", false)
                 .and()
                 .logout().permitAll()
                 .and()
                 .csrf().disable();
     }
-// не сработало (((
+
 //    @Bean
 //    @Override
 //    public UserDetailsService userDetailsService() {
@@ -50,8 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new InMemoryUserDetailsManager(user);
 //    }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+// not for production because a password is open
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
     }
 }
